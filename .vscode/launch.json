@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Dev Backup: Development",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}\\scr\\main.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "DEV_BACKUP_ENV": "development"
+            },
+            "justMyCode": true
+        },
+        {
+            "name": "Dev Backup: Production",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}\\scr\\main.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "DEV_BACKUP_ENV": "production"
+            },
+            "justMyCode": true
+        }
+    ]
+}
