@@ -131,47 +131,70 @@ class DevBackupApp(ctk.CTk):
     def open_add_dialog(self) -> None:
         dialog = ctk.CTkToplevel(self)
         dialog.title("Νέο project")
-        dialog.geometry("600x570")
+        dialog.geometry("620x620")
         dialog.transient(self)
         dialog.grab_set()
         dialog.grid_columnconfigure(0, weight=1)
-        ctk.CTkLabel(dialog, text="Προσθήκη project", font=ctk.CTkFont(size=22, weight="bold")).grid(padx=24, pady=(24, 16), sticky="w")
-        name = ctk.CTkEntry(dialog, placeholder_text="Όνομα project")
-        name.grid(padx=24, pady=6, sticky="ew")
+        ctk.CTkLabel(
+            dialog,
+            text="Νέο project",
+            font=ctk.CTkFont(size=22, weight="bold"),
+        ).grid(padx=24, pady=(22, 2), sticky="w")
+        ctk.CTkLabel(
+            dialog,
+            text="Όνομα, πηγή και προορισμός backup.",
+            text_color="gray60",
+        ).grid(padx=24, pady=(0, 18), sticky="w")
+
+        ctk.CTkLabel(dialog, text="Όνομα project").grid(padx=24, sticky="w")
+        name = ctk.CTkEntry(dialog, placeholder_text="π.χ. E-shop API")
+        name.grid(padx=24, pady=(3, 8), sticky="ew")
+        ctk.CTkLabel(dialog, text="Τεχνολογία / γλώσσα").grid(padx=24, sticky="w")
+        language = ctk.CTkOptionMenu(dialog, values=list(LANGUAGES))
+        language.set("Python")
+        language.grid(padx=24, pady=(3, 14), sticky="ew")
+
+        ctk.CTkLabel(
+            dialog,
+            text="Πηγή — φάκελος project",
+            font=ctk.CTkFont(weight="bold"),
+        ).grid(padx=24, sticky="w")
         path_row = ctk.CTkFrame(dialog, fg_color="transparent")
-        path_row.grid(padx=24, pady=6, sticky="ew")
+        path_row.grid(padx=24, pady=(3, 8), sticky="ew")
         path_row.grid_columnconfigure(0, weight=1)
-        path = ctk.CTkEntry(path_row, placeholder_text="Φάκελος project")
+        path = ctk.CTkEntry(path_row, placeholder_text=r"π.χ. C:\Projects\eshop-api")
         path.grid(row=0, column=0, padx=(0, 8), sticky="ew")
         ctk.CTkButton(path_row, text="Επιλογή…", width=90, command=lambda: self._choose_source(path, name)).grid(row=0, column=1)
+        ctk.CTkLabel(
+            dialog,
+            text="Προορισμός — φάκελος ZIP backups",
+            font=ctk.CTkFont(weight="bold"),
+        ).grid(padx=24, sticky="w")
         backup_row = ctk.CTkFrame(dialog, fg_color="transparent")
-        backup_row.grid(padx=24, pady=6, sticky="ew")
+        backup_row.grid(padx=24, pady=(3, 10), sticky="ew")
         backup_row.grid_columnconfigure(0, weight=1)
-        backup_path = ctk.CTkEntry(backup_row, placeholder_text="Φάκελος όπου θα αποθηκεύονται απευθείας τα ZIP")
+        backup_path = ctk.CTkEntry(backup_row, placeholder_text=r"π.χ. D:\Backups\Projects")
         backup_path.grid(row=0, column=0, padx=(0, 8), sticky="ew")
         backup_path.insert(0, str(self.manager.default_backup_root))
         ctk.CTkButton(
             backup_row, text="Επιλογή…", width=90,
             command=lambda: self._choose_folder(backup_path, "Επίλεξε φάκελο αποθήκευσης backup"),
         ).grid(row=0, column=1)
-        language = ctk.CTkOptionMenu(dialog, values=list(LANGUAGES))
-        language.set("Python")
-        language.grid(padx=24, pady=6, sticky="ew")
-        exclusions = ctk.CTkEntry(dialog, placeholder_text="Εξαιρέσεις, π.χ. data/*.csv, tmp, *.log")
-        exclusions.grid(padx=24, pady=6, sticky="ew")
+
+        ctk.CTkLabel(dialog, text="Εξαιρέσεις (προαιρετικά)").grid(padx=24, sticky="w")
+        exclusions = ctk.CTkEntry(
+            dialog,
+            placeholder_text="Χώρισέ τα με κόμμα, π.χ. data/*.csv, tmp, *.log",
+        )
+        exclusions.grid(padx=24, pady=(3, 6), sticky="ew")
         use_gitignore = ctk.CTkCheckBox(dialog, text="Χρήση κανόνων από το .gitignore")
         use_gitignore.select()
-        use_gitignore.grid(padx=24, pady=(12, 5), sticky="w")
+        use_gitignore.grid(padx=24, pady=(4, 5), sticky="w")
         include_sensitive = ctk.CTkCheckBox(
             dialog,
             text="Συμπερίληψη πιθανών secrets (.env, keys, credentials)",
         )
         include_sensitive.grid(padx=24, pady=5, sticky="w")
-        ctk.CTkLabel(
-            dialog,
-            text="Τα secrets εξαιρούνται από προεπιλογή για ασφάλεια.",
-            text_color="gray60",
-        ).grid(padx=24, pady=(0, 4), sticky="w")
 
         def save() -> None:
             try:
@@ -191,7 +214,12 @@ class DevBackupApp(ctk.CTk):
             except Exception as exc:
                 messagebox.showerror("Αποτυχία", str(exc), parent=dialog)
 
-        ctk.CTkButton(dialog, text="Αποθήκευση", command=save).grid(padx=24, pady=22, sticky="ew")
+        ctk.CTkButton(
+            dialog,
+            text="Δημιουργία project",
+            height=40,
+            command=save,
+        ).grid(padx=24, pady=(12, 20), sticky="ew")
 
     @staticmethod
     def _choose_source(path_entry: ctk.CTkEntry, name_entry: ctk.CTkEntry) -> None:

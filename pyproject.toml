@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dev-project-backup"
+version = "0.1.0"
+description = "Desktop application for creating and restoring local project backups."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "customtkinter==5.2.2",
+    "platformdirs==4.12.3",
+    "pathspec==0.12.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==9.1.1",
+    "pyinstaller==6.22.3",
+]

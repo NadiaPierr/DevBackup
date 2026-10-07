@@ -1,4 +1,5 @@
-#verion 0.0.6
+"""Application entry point."""
+
 from app import DevBackupApp
 
 

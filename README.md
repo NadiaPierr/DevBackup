@@ -29,14 +29,27 @@ Desktop εφαρμογή για τη δημιουργία και επαναφο�
 
 Υποστηρίζονται έτοιμοι κανόνες για Python, JavaScript/TypeScript, Java, C#, C/C++, Go, Rust, PHP και Ruby.
 
-## Εγκατάσταση
+## Εγκατάσταση για τελικό χρήστη
+
+Κατέβασε το `DevProjectBackup-Setup-<version>.exe`, εκτέλεσέ το και ακολούθησε τον οδηγό εγκατάστασης. Δεν απαιτείται ξεχωριστή εγκατάσταση Python.
+
+Ο installer δημιουργεί συντόμευση στο Start Menu και προσφέρει προαιρετική συντόμευση στην επιφάνεια εργασίας.
+
+## Προετοιμασία για ανάπτυξη
+
+Από PowerShell στον βασικό φάκελο του project:
 
 ```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-python .\scr\main.py
+.\setup.cmd
 ```
+
+Το script ελέγχει την Python, δημιουργεί το `.venv` και εγκαθιστά τις κλειδωμένες εξαρτήσεις. Για άμεση εκκίνηση σε development mode:
+
+```powershell
+.\setup.cmd -Run -Development
+```
+
+Το `.cmd` wrapper επιτρέπει την εκτέλεση χωρίς μόνιμη αλλαγή του PowerShell Execution Policy. Το αντίστοιχο PowerShell script παραμένει διαθέσιμο ως `setup.ps1`.
 
 ## Χρήση
 
@@ -64,15 +77,30 @@ python .\scr\main.py
 
 ## Αυτοματοποιημένα tests
 
-Εγκατάστησε τα dependencies ανάπτυξης και εκτέλεσε τη σουίτα από τον βασικό φάκελο του project:
+Μετά το `setup.cmd`, εκτέλεσε τη σουίτα από τον βασικό φάκελο του project:
 
 ```powershell
-pip install -r requirements-dev.txt
-python -m pytest
+.\.venv\Scripts\python.exe -m pytest
 ```
 
-Τα tests χρησιμοποιούν προσωρινούς φακέλους και δεν επηρεάζουν τα projects ή τα backups του χρήστη. Καλύπτουν τη διαχείριση του καταλόγου, τους κανόνες εξαιρέσεων, τη δημιουργία ZIP, την επαναφορά αρχείων και τους βασικούς ελέγχους ασφαλείας.
+Τα tests χρησιμοποιούν προσωρινούς φακέλους και δεν επηρεάζουν τα projects ή τα backups του χρήστη. Καλύπτουν τη διαχείριση του καταλόγου, τους κανόνες εξαιρέσεων, τη δημιουργία ZIP, την επαναφορά αρχείων και βασικούς ελέγχους ασφαλείας.
+
+## Δημιουργία executable και installer
+
+Για αυτόνομο Windows executable:
+
+```powershell
+.\build.cmd
+```
+
+Το αποτέλεσμα δημιουργείται στο `dist\DevProjectBackup.exe`. Για να δημιουργηθεί και installer απαιτείται το Inno Setup 6:
+
+```powershell
+.\build.cmd -Installer
+```
+
+Ο installer δημιουργείται στο `installer-output`. Το workflow `.github/workflows/windows-build.yml` εκτελεί tests και δημιουργεί και τα δύο artifacts χειροκίνητα ή όταν γίνει push ένα tag όπως `v0.1.0`.
 
 ## Κατάσταση έργου
 
-Λειτουργικό desktop prototype με βασική αυτοματοποιημένη κάλυψη tests. Πριν από εταιρική παραγωγική χρήση προτείνονται CI pipeline, packaging, πολιτική retention και έλεγχος ακεραιότητας των archives.
+Λειτουργικό desktop prototype με αυτοματοποιημένα tests, Windows packaging και CI build. Πριν από εταιρική παραγωγική χρήση προτείνονται ψηφιακή υπογραφή του installer, πολιτική retention και έλεγχος ακεραιότητας των archives.
