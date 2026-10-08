@@ -27,6 +27,7 @@ pytest-report.xml
 build/
 dist/
 installer-output/
+packaging/generated_version_info.txt
 *.egg-info/
 
 # Local application data and generated backup archives

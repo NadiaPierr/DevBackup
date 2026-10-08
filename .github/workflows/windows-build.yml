@@ -27,11 +27,8 @@ jobs:
       - name: Run tests
         run: python -m pytest
 
-      - name: Build executable
-        run: python -m PyInstaller --noconfirm --clean packaging/DevProjectBackup.spec
-
-      - name: Build installer
-        run: iscc packaging/DevProjectBackup.iss
+      - name: Build executable and installer
+        run: .\build.cmd -Installer
 
       - uses: actions/upload-artifact@v4
         with:

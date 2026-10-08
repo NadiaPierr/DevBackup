@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "dev-project-backup"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Desktop application for creating and restoring local project backups."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -19,3 +19,10 @@ dev = [
     "pytest==9.1.1",
     "pyinstaller==6.22.3",
 ]
+
+[tool.setuptools]
+package-dir = {"" = "scr"}
+py-modules = ["app", "app_paths", "backup_manager", "main", "version"]
+
+[tool.setuptools.dynamic]
+version = {attr = "version.__version__"}

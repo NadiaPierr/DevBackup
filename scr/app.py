@@ -10,6 +10,7 @@ from tkinter import filedialog, messagebox
 import customtkinter as ctk
 
 from backup_manager import LANGUAGES, BackupManager, BackupPlan, Project, Version
+from version import __version__
 
 
 ctk.set_appearance_mode("system")
@@ -19,7 +20,7 @@ ctk.set_default_color_theme("blue")
 class DevBackupApp(ctk.CTk):
     def __init__(self) -> None:
         super().__init__()
-        self.title("Dev Project Backup")
+        self.title(f"Dev Project Backup {__version__}")
         self.geometry("1050x650")
         self.minsize(850, 520)
         self.manager = BackupManager()
@@ -65,6 +66,8 @@ class DevBackupApp(ctk.CTk):
         actions.grid_columnconfigure(0, weight=1)
         self.note_entry = ctk.CTkEntry(actions, placeholder_text="Όνομα έκδοσης, π.χ. v1.0-login")
         self.note_entry.grid(row=0, column=0, padx=(0, 10), sticky="ew")
+        self.note_entry.bind("<Return>", lambda _event: self.start_backup())
+        self.note_entry.bind("<KP_Enter>", lambda _event: self.start_backup())
         self.rules_button = ctk.CTkButton(actions, text="Ρυθμίσεις…", width=100, command=self.open_rules_dialog, state="disabled")
         self.rules_button.grid(row=0, column=1, padx=(0, 10))
         self.backup_button = ctk.CTkButton(actions, text="Δημιουργία backup", command=self.start_backup, state="disabled")
@@ -214,6 +217,8 @@ class DevBackupApp(ctk.CTk):
             except Exception as exc:
                 messagebox.showerror("Αποτυχία", str(exc), parent=dialog)
 
+        dialog.bind("<Return>", lambda _event: save())
+        dialog.bind("<KP_Enter>", lambda _event: save())
         ctk.CTkButton(
             dialog,
             text="Δημιουργία project",
@@ -291,6 +296,8 @@ class DevBackupApp(ctk.CTk):
             except Exception as exc:
                 messagebox.showerror("Αποτυχία", str(exc), parent=dialog)
 
+        dialog.bind("<Return>", lambda _event: save())
+        dialog.bind("<KP_Enter>", lambda _event: save())
         ctk.CTkButton(dialog, text="Αποθήκευση ρυθμίσεων", command=save).grid(padx=24, pady=22, sticky="ew")
 
     def remove_selected_project(self) -> None:

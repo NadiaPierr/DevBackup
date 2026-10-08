@@ -1,12 +1,16 @@
 #define MyAppName "Dev Project Backup"
-#define MyAppVersion "0.1.0"
 #define MyAppPublisher "Dev Project Backup"
 #define MyAppExeName "DevProjectBackup.exe"
+
+#ifndef MyAppVersion
+  #error MyAppVersion must be provided by build.ps1
+#endif
 
 [Setup]
 AppId={{1D11829D-A962-4E04-8F85-72B16E233B38}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
+VersionInfoVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 DefaultDirName={autopf}\DevProjectBackup
 DefaultGroupName={#MyAppName}

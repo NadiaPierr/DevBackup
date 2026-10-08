@@ -99,7 +99,33 @@ python .\scr\main.py
 .\build.cmd -Installer
 ```
 
-Ο installer δημιουργείται στο `installer-output`. Το workflow `.github/workflows/windows-build.yml` εκτελεί tests και δημιουργεί και τα δύο artifacts χειροκίνητα ή όταν γίνει push ένα tag όπως `v0.1.0`.
+Ο installer δημιουργείται στο `installer-output`. Το workflow `.github/workflows/windows-build.yml` εκτελεί tests και δημιουργεί και τα δύο artifacts χειροκίνητα ή όταν γίνει push ένα tag όπως `v1.0.3`.
+
+### Αλλαγή έκδοσης
+
+Η έκδοση ορίζεται μόνο στο `scr/version.py`:
+
+```python
+__version__ = "1.0.3"
+```
+
+Πριν από νέο release, αύξησε αυτή την τιμή σύμφωνα με το Semantic Versioning, εκτέλεσε τους ελέγχους και δημιούργησε τα artifacts:
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest
+.\build.cmd -Installer
+```
+
+Το build ενημερώνει αυτόματα:
+
+- τα metadata του `DevProjectBackup.exe`,
+- το όνομα και την έκδοση του installer,
+- την έκδοση του Python project από το `pyproject.toml`,
+- και την έκδοση που εμφανίζεται στον τίτλο της εφαρμογής.
+
+Δεν χρειάζεται χειροκίνητη αλλαγή στα αρχεία `.spec`, `.iss` ή `pyproject.toml`.
+
+Για GitHub release, το tag πρέπει να συμφωνεί με την έκδοση, π.χ. για `__version__ = "1.0.3"` χρησιμοποίησε το tag `v1.0.3`.
 
 ## Κατάσταση έργου
 

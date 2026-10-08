@@ -31,5 +31,5 @@ exe = EXE(
     upx=True,
     console=False,
     disable_windowed_traceback=False,
-    version=str(project_root / "packaging" / "version_info.txt"),
+    version=str(project_root / "packaging" / "generated_version_info.txt"),
 )
