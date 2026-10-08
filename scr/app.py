@@ -262,9 +262,13 @@ class DevBackupApp(ctk.CTk):
             dialog, text="Η αλλαγή ισχύει για νέα backups· τα υπάρχοντα ZIP δεν μετακινούνται.",
             text_color="gray60",
         ).grid(padx=24, pady=(0, 8), sticky="w")
-        exclusions = ctk.CTkEntry(dialog, placeholder_text="Εξαιρέσεις χωρισμένες με κόμμα")
+        exclusions = ctk.CTkEntry(
+            dialog,
+            placeholder_text="Εξαιρέσεις με κόμμα, π.χ. .venv, node_modules, *.log",
+        )
         exclusions.grid(padx=24, pady=6, sticky="ew")
-        exclusions.insert(0, ", ".join(project.custom_excludes or []))
+        if project.custom_excludes:
+            exclusions.insert(0, ", ".join(project.custom_excludes))
         use_gitignore = ctk.CTkCheckBox(dialog, text="Χρήση κανόνων από το .gitignore")
         use_gitignore.grid(padx=24, pady=(14, 6), sticky="w")
         if project.use_gitignore:
