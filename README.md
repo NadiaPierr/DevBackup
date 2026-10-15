@@ -85,7 +85,7 @@ Desktop εφαρμογή για τη δημιουργία και επαναφο�
 
 ```powershell
 $env:DEV_BACKUP_ENV = "development"
-python .\scr\main.py
+python .\src\main.py
 ```
 
 Σε αυτή τη λειτουργία, τα δοκιμαστικά δεδομένα αποθηκεύονται τοπικά στον φάκελο `.devdata`.
@@ -118,7 +118,7 @@ python .\scr\main.py
 
 ### Αλλαγή έκδοσης
 
-Η έκδοση ορίζεται μόνο στο `scr/version.py`:
+Η έκδοση ορίζεται μόνο στο `src/version.py`:
 
 ```python
 __version__ = "1.0.3"

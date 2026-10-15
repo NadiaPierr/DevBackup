@@ -21,7 +21,7 @@ dev = [
 ]
 
 [tool.setuptools]
-package-dir = {"" = "scr"}
+package-dir = {"" = "src"}
 py-modules = ["app", "app_paths", "backup_manager", "main", "version"]
 
 [tool.setuptools.dynamic]

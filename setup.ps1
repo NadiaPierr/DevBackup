@@ -51,12 +51,12 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host ""
 Write-Host "Setup completed successfully." -ForegroundColor Green
 Write-Host "Tests:  .\.venv\Scripts\python.exe -m pytest"
-Write-Host "Run:    .\.venv\Scripts\python.exe .\scr\main.py"
+Write-Host "Run:    .\.venv\Scripts\python.exe .\src\main.py"
 Write-Host "Build:    .\build.ps1"
 
 if ($Run) {
     if ($Development) {
         $env:DEV_BACKUP_ENV = "development"
     }
-    & $VirtualPython (Join-Path $ProjectRoot "scr\main.py")
+    & $VirtualPython (Join-Path $ProjectRoot "src\main.py")
 }

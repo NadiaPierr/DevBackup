@@ -7,7 +7,7 @@ $ErrorActionPreference = "Stop"
 $ProjectRoot = $PSScriptRoot
 $VirtualPython = Join-Path $ProjectRoot ".venv\Scripts\python.exe"
 $SpecFile = Join-Path $ProjectRoot "packaging\DevProjectBackup.spec"
-$VersionFile = Join-Path $ProjectRoot "scr\version.py"
+$VersionFile = Join-Path $ProjectRoot "src\version.py"
 $VersionInfoFile = Join-Path $ProjectRoot "packaging\generated_version_info.txt"
 
 Set-Location $ProjectRoot
@@ -19,7 +19,7 @@ if (-not (Test-Path -LiteralPath $VirtualPython)) {
 $VersionSource = Get-Content -Raw -LiteralPath $VersionFile
 $VersionMatch = [regex]::Match($VersionSource, '__version__\s*=\s*"(?<version>\d+\.\d+\.\d+)"')
 if (-not $VersionMatch.Success) {
-    throw "Could not read a semantic version from scr\version.py."
+    throw "Could not read a semantic version from src\version.py."
 }
 $AppVersion = $VersionMatch.Groups["version"].Value
 $VersionParts = $AppVersion.Split(".")

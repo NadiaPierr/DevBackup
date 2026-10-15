@@ -8,8 +8,8 @@ project_root = Path(SPECPATH).parent
 datas, binaries, hiddenimports = collect_all("customtkinter")
 
 a = Analysis(
-    [str(project_root / "scr" / "main.py")],
-    pathex=[str(project_root / "scr")],
+    [str(project_root / "src" / "main.py")],
+    pathex=[str(project_root / "src")],
     binaries=binaries,
     datas=datas,
     hiddenimports=hiddenimports,
